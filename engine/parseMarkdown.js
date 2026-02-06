@@ -4,7 +4,7 @@ import remarkGfm from "remark-gfm";
 import rehypeStringify from "rehype-stringify";
 import remarkRehype from "remark-rehype";
 
-export async function parseMarkdown(markdown: string): Promise<string> {
+export async function parseMarkdown(markdown) {
   const file = await unified()
     .use(remarkParse)
     .use(remarkGfm)
