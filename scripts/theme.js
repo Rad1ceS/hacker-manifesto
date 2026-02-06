@@ -1,19 +1,19 @@
 const button = document.getElementById("theme-toggle");
 const html = document.documentElement;
 
-// Initialize theme based on system preference
-if (!localStorage.getItem("theme")) {
-  const systemPrefersDark = window.matchMedia(
-    "(prefers-color-scheme: dark)",
-  ).matches;
-  html.dataset.theme = systemPrefersDark ? "dark" : "light";
+// Initialize from system preference or localStorage
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  html.dataset.colorMode = savedTheme;
 } else {
-  html.dataset.theme = localStorage.getItem("theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  html.dataset.colorMode = prefersDark ? "dark" : "light";
 }
 
+// Toggle theme on button click
 button.addEventListener("click", () => {
-  const current = html.dataset.theme;
+  const current = html.dataset.colorMode;
   const next = current === "light" ? "dark" : "light";
-  html.dataset.theme = next;
+  html.dataset.colorMode = next;
   localStorage.setItem("theme", next);
 });

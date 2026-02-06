@@ -28,7 +28,8 @@ async function build() {
   template = template
     .replace("{{ title }}", site.title ?? "")
     .replace("{{ description }}", site.description ?? "")
-    .replace("{{ lang }}", site.language ?? "en")
+    .replace("{{ lang }}", site.language ?? "ka")
+    .replace("{{ keywords }}", site.keywords)
     .replace("{{ content }}", contentHtml);
 
   await fs.writeFile(path.join(DIST_DIR, "index.html"), template);

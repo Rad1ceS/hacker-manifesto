@@ -1,22 +1,37 @@
 <!doctype html>
-<html lang="{{ lang }}">
+<html lang="{{ lang }}" data-color-mode="light">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#7F00FF" id="theme-color-meta" />
+
     <title>{{ title }}</title>
     <meta name="description" content="{{ description }}" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#7F00FF" />
+    <meta name="keywords" content="{{ keywords }}" />
+
+    <!-- Markdown default CSS -->
+    <link rel="stylesheet" href="../styles/default.css" />
+    <!-- Custom overrides -->
     <link rel="stylesheet" href="../styles/styles.css" />
   </head>
 
   <body>
-    <button id="theme-toggle">🌓</button>
+    <div
+      class="markdown-style"
+      style="max-width: 960px; margin: 50px auto 60px auto; padding: 16px"
+    >
+      <!-- Theme toggle button -->
+      <button id="theme-toggle" title="Toggle light/dark mode">🌓</button>
 
-    <main class="content">{{ content }}</main>
+      <!-- Main content -->
+      <main class="content">{{ content }}</main>
 
-    <footer>
-      <p>Part of <strong>Radices</strong>.</p>
-    </footer>
+      <!-- Footer -->
+      <footer>
+        <p>Part of <strong>Radices</strong>.</p>
+        <p id="footer-additional">Your footer info here</p>
+      </footer>
+    </div>
 
     <script src="../scripts/theme.js"></script>
   </body>
