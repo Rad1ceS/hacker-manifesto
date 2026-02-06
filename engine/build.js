@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { parseMarkdown } from "./parseMarkdown.ts";
+import { parseMarkdown } from "./parseMarkdown.js";
 
 const ROOT = process.cwd();
 const CONTENT_DIR = path.join(ROOT, "content");

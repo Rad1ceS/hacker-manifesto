@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "build": "npm run build-icons && npm run build-social-images && npm run build-manifest && npm run build-engine",
-    "build-engine": "ts-node engine/build.ts",
+    "build": "rm -rf dist && npm run build-icons && npm run build-social-images && npm run build-manifest && npm run build-assets && npm run build-engine",
+    "build-assets": "node scripts/copy-assets.js",
+    "build-engine": "node engine/build.js",
     "build-icons": "node scripts/generate-icons.js",
     "build-social-images": "node scripts/generate-social-images.js",
     "build-manifest": "node scripts/generate-manifest.js"
@@ -25,9 +26,5 @@
     "remark-rehype": "^11.1.2",
     "sharp": "^0.34.5",
     "unified": "^11.0.5"
-  },
-  "devDependencies": {
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
   }
 }
