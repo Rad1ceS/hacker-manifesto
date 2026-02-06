@@ -15,6 +15,10 @@ h6 {
   font-family: "BPG Arial Caps", sans-serif;
 }
 
+.footnotes h2 {
+  text-align: left;
+}
+
 .footer {
   position: relative;
   background-color: var(--color-canvas-subtle);
