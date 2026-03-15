@@ -1,23 +1,36 @@
 import sharp from "sharp";
-import fs from "fs";
-import path from "path";
+import fs from "node:fs/promises";
+import { existsSync } from "node:fs";
+import path from "node:path";
 
-const baseIcon = path.resolve("icons/base_icon-2048x2048.png");
-const outputDir = path.resolve("dist/icons");
-
-if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
+const baseIcon = path.join(process.cwd(), "icons/base_icon-2048x2048.png");
+const outputDir = path.join(process.cwd(), "dist/icons");
 
 const sizes = [16, 32, 48, 72, 96, 144, 192, 512];
 
-sizes.forEach((size) => {
-  sharp(baseIcon)
-    .resize(size, size)
-    .toFile(path.join(outputDir, `icon-${size}x${size}.png`))
-    .then(() => console.log(`Generated icon-${size}x${size}.png`));
-});
+async function generateIcons() {
+  if (!existsSync(outputDir)) {
+    await fs.mkdir(outputDir, { recursive: true });
+  }
 
-//  generate favicon.ico
-sharp(baseIcon)
-  .resize(32, 32)
-  .toFile(path.join(outputDir, "favicon.ico"))
-  .then(() => console.log("Generated favicon.ico"));
+  // Generate all PNG icons inside a Promise.all
+  await Promise.all(
+    sizes.map(async (size) => {
+      await sharp(baseIcon)
+        .resize(size, size)
+        .toFile(path.join(outputDir, `icon-${size}x${size}.png`));
+      console.log(`✓ Generated icon-${size}x${size}.png`);
+    })
+  );
+
+  // Generate favicon.ico
+  await sharp(baseIcon)
+    .resize(32, 32)
+    .toFile(path.join(outputDir, "favicon.ico"));
+  console.log("✓ Generated favicon.ico");
+}
+
+generateIcons().catch((err) => {
+  console.error("Failed to generate icons:", err);
+  process.exit(1);
+});

@@ -1,29 +1,25 @@
-import fs from "fs";
-import path from "path";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { existsSync } from "node:fs";
 
-const DIST = "dist";
+const DIST = path.join(process.cwd(), "dist");
 
 const assets = ["styles", "fonts", "scripts"];
 
-function copyRecursive(src, dest) {
-  if (!fs.existsSync(src)) return;
+async function copyAssets() {
+  for (const asset of assets) {
+    const srcPath = path.join(process.cwd(), asset);
+    const destPath = path.join(DIST, asset);
 
-  fs.mkdirSync(dest, { recursive: true });
-
-  for (const item of fs.readdirSync(src)) {
-    const srcPath = path.join(src, item);
-    const destPath = path.join(dest, item);
-
-    if (fs.statSync(srcPath).isDirectory()) {
-      copyRecursive(srcPath, destPath);
-    } else {
-      fs.copyFileSync(srcPath, destPath);
+    if (existsSync(srcPath)) {
+      await fs.cp(srcPath, destPath, { recursive: true });
     }
   }
 }
 
-for (const asset of assets) {
-  copyRecursive(asset, path.join(DIST, asset));
-}
-
-console.log("✓ Assets copied to dist/");
+copyAssets()
+  .then(() => console.log("✓ Assets copied to dist/"))
+  .catch((err) => {
+    console.error("Error copyings assets:", err);
+    process.exit(1);
+  });
