@@ -130,6 +130,7 @@ h6 {
 }
 .markdown-style abbr[title] {
   border-bottom: none;
+  -webkit-text-decoration: underline dotted;
   text-decoration: underline dotted;
 }
 .markdown-style b,
@@ -169,6 +170,7 @@ h6 {
 .markdown-style img {
   border-style: none;
   max-width: 100%;
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   background-color: var(--color-canvas-default);
 }
@@ -183,6 +185,7 @@ h6 {
   margin: 1em 40px;
 }
 .markdown-style hr {
+  -webkit-box-sizing: content-box;
   box-sizing: content-box;
   overflow: hidden;
   background: transparent;
@@ -219,6 +222,7 @@ h6 {
 }
 .markdown-style [type="checkbox"],
 .markdown-style [type="radio"] {
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   padding: 0;
 }
@@ -258,6 +262,8 @@ h6 {
   border-spacing: 0;
   border-collapse: collapse;
   display: block;
+  width: -webkit-max-content;
+  width: -moz-max-content;
   width: max-content;
   max-width: 100%;
   overflow: auto;
@@ -290,6 +296,7 @@ h6 {
   border: solid 1px var(--color-neutral-muted);
   border-bottom-color: var(--color-neutral-muted);
   border-radius: 6px;
+  -webkit-box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
   box-shadow: inset 0 -1px 0 var(--color-neutral-muted);
 }
 .markdown-style h1,
@@ -373,6 +380,22 @@ h6 {
   overflow: visible !important;
   vertical-align: text-bottom;
   fill: currentColor;
+}
+.markdown-style ::-webkit-input-placeholder {
+  color: var(--color-fg-subtle);
+  opacity: 1;
+}
+.markdown-style ::-moz-placeholder {
+  color: var(--color-fg-subtle);
+  opacity: 1;
+}
+.markdown-style :-ms-input-placeholder {
+  color: var(--color-fg-subtle);
+  opacity: 1;
+}
+.markdown-style ::-ms-input-placeholder {
+  color: var(--color-fg-subtle);
+  opacity: 1;
 }
 .markdown-style ::placeholder {
   color: var(--color-fg-subtle);
@@ -553,6 +576,7 @@ h6 {
   display: block !important;
   max-width: 100% !important;
   padding: 2px;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border-bottom-right-radius: 6px !important;
   border-bottom-left-radius: 6px !important;
@@ -877,9 +901,12 @@ h6 {
   margin: 0 -1.6em 0.25em 0.2em;
 }
 .markdown-style ::-webkit-calendar-picker-indicator {
+  -webkit-filter: invert(50%);
   filter: invert(50%);
 } /** copy button style **/
 .markdown-style pre .copied {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   position: absolute;
   cursor: pointer;
@@ -890,6 +917,8 @@ h6 {
   background: #82828226;
   padding: 6px;
   font-size: 12px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
   transition: all 0.3s;
 }
 .markdown-style pre .copied:not(.active) {
