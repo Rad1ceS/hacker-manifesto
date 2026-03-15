@@ -1,30 +1,37 @@
-const themeSelect = document.getElementById("theme-select");
-const html = document.documentElement;
-const themeMeta = document.getElementById("theme-color-meta");
+document.addEventListener("DOMContentLoaded", function () {
+  const themeSelect = document.getElementById("theme-select");
+  const html = document.documentElement;
+  const themeMeta = document.getElementById("theme-color-meta");
+  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)");
 
-// Detect system preference
-const systemPrefersDark = window.matchMedia(
-  "(prefers-color-scheme: dark)",
-).matches;
-
-// Initialize
-const savedTheme = localStorage.getItem("theme") || "system";
-themeSelect.value = savedTheme;
-applyTheme(savedTheme);
-
-themeSelect.addEventListener("change", () => {
-  const selected = themeSelect.value;
-  localStorage.setItem("theme", selected);
-  applyTheme(selected);
-});
-
-function applyTheme(mode) {
-  if (mode === "system") {
-    html.dataset.colorMode = systemPrefersDark ? "dark" : "light";
-  } else {
-    html.dataset.colorMode = mode;
+  function applyTheme(mode) {
+    const isDark = mode === "dark" || (mode === "system" && systemPrefersDark.matches);
+    html.setAttribute("data-color-mode", isDark ? "dark" : "light");
+    if (themeMeta) {
+      themeMeta.setAttribute("content", isDark ? "#0d1117" : "#ffffff");
+    }
   }
 
-  const themeColor = html.dataset.colorMode === "dark" ? "#0d1117" : "#ffffff";
-  themeMeta.setAttribute("content", themeColor);
-}
+  // 1. Initialize from localStorage or fallback to system
+  const savedTheme = localStorage.getItem("theme") || "system";
+  if (themeSelect) {
+    themeSelect.value = savedTheme; // Sync UI
+    
+    // 2. Listen for dropdown changes
+    themeSelect.addEventListener("change", (e) => {
+      const selected = e.target.value;
+      localStorage.setItem("theme", selected);
+      applyTheme(selected);
+    });
+  }
+
+  // 3. React to system preference changes if 'system' is currently selected
+  systemPrefersDark.addEventListener("change", () => {
+    if (localStorage.getItem("theme") === "system" || !localStorage.getItem("theme")) {
+      applyTheme("system");
+    }
+  });
+
+  // Apply initially (if not already applied by head script)
+  applyTheme(savedTheme);
+});
